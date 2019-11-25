@@ -91,58 +91,55 @@ console.log(ratesAverage(movies))
 
 // Iteration 5: Drama movies - Get the average of Drama Movies
 
-function dramaMoviesRate(movieList) {
-  if (movieList.length === 0) return 0; 
-  let dramaMovies = movieList.filter(movie => movie.genre.includes('Drama'));
-  if (dramaMovies.length === 0) return 0;
-  let movieRates = dramaMovies.map(movie => movie.rate);
-  let checkedMovieRates = movieRates.filter(movie => movie !== undefined);
-  const totalReviews = checkedMovieRates.reduce((sum, elem) => {
-      return sum += elem;
-  }, 0);
-  return Math.round((totalReviews / checkedMovieRates.length) * 100) / 100;
+function dramaMoviesRate(array){
+
+  let dramaMovies = array.filter( (eachMovie) => {
+    return eachMovie.genre.includes("Drama");
+  })
+
+  let avgRate = ratesAverage(dramaMovies);
+
+  return avgRate;
+
+
+
 }
 
 // Iteration 6: Time Format - Turn duration of the movies from hours to minutes
 
-function turnHoursToMinutes(movieList) {
-  movieList.forEach(movie => {
-    let time = movie.duration.split(' ');
-    console.log(time);
-  });
+function turnHoursToMinutes(array){
 
-  let newList = movieList.map(movie => movie);
-
-  let changedDuration = newList.map((movie) => {
-      let time = movie.duration;
-      let min;
-      let hour;
-      let final;
-      let temp;
-      if (time.includes('h') && time.includes('min')) {
-          temp = time.replace('h', ' ').replace('min', ' ').trim();
-          let hour = Number(temp.substring(0, temp.indexOf(" ")));
-          let min = Number(temp.substring(temp.indexOf(" ") + 1));
-          final = (hour * 60 + min);
-      }
-      else if (time.includes('h')) {
-          hour = Number(time.substring(0, time.indexOf("h")));
-          final = hour * 60;
-      }
-      else if (time.includes('min')) {
-          min = Number(time.substring(0, time.indexOf("min")));
-          final = min;
-      }
-      return {
-        title: movie.title,
-        year: movie.year,
-        director: movie.director,
-        duration: final,
-        genre: movie.genre,
-        rate: movie.rate
+  return array.map( (eachMovie) =>{
+  
+    let duration = eachMovie.duration;
+  
+    let hour = 0;
+    let min = 0;
+  
+    if(duration.indexOf('h') >= 0 && duration.indexOf('min') >= 0){
+      hour = duration.substring(0, duration.indexOf('h'));
+      min = duration.substring(duration.indexOf(" ") + 1, duration.indexOf("min"));
+      console.log(hour, min)
     }
+    else if(duration.indexOf('h') >= 0){
+      hour = duration.substring(0, duration.indexOf('h'));
+    }
+    else if(duration.indexOf('min') >= 0){
+      min = duration.substring(0, duration.indexOf("min"))
+    }
+  
+    let formattedTime = Number(hour) * 60 + Number(min);
+  
+  
+  
+    return {
+      title: eachMovie.title,
+      year: eachMovie.year,
+      duration: formattedTime,
+    }
+  
   })
-  return changedDuration;
-}
+  
+  }
 
 // BONUS Iteration: Best yearly rate average - Best yearly rate average

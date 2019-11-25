@@ -92,11 +92,9 @@ console.log(ratesAverage(movies))
 // Iteration 5: Drama movies - Get the average of Drama Movies
 
 function dramaMoviesRate(movieList) {
-  if (movieList.length === 0) {
-    return 0; }
+  if (movieList.length === 0) return 0; 
   let dramaMovies = movieList.filter(movie => movie.genre.includes('Drama'));
-  if (dramaMovies.length === 0) 
-  {return 0; }
+  if (dramaMovies.length === 0) return 0;
   let movieRates = dramaMovies.map(movie => movie.rate);
   let checkedMovieRates = movieRates.filter(movie => movie !== undefined);
   const totalReviews = checkedMovieRates.reduce((sum, elem) => {
@@ -135,7 +133,14 @@ function turnHoursToMinutes(movieList) {
           min = Number(time.substring(0, time.indexOf("min")));
           final = min;
       }
-      return movieList
+      return {
+        title: movie.title,
+        year: movie.year,
+        director: movie.director,
+        duration: final,
+        genre: movie.genre,
+        rate: movie.rate
+    }
   })
   return changedDuration;
 }
